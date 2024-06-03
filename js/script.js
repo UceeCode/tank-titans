@@ -1,5 +1,5 @@
 const btnStart = document.querySelector('.btnStart');
-const gameOverEle = document.getElementById('gameOverEle');
+const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
