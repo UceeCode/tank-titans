@@ -1,8 +1,8 @@
 let btnStart = document.querySelector('.btnStart');
 let gameOverElement = document.getElementById('gameOverElement');
-let container = document.getElementById('container');
+let container = document.querySelector('.container');
 let box = document.querySelector('.box');
-let boxCenter = [box.offsetLeft + (box.offsetRight / 2), box.offsetTop + (box.offsetHeight / 2)];
+let boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 console.log(boxCenter);
 let player;
 let animateGame;
@@ -14,7 +14,6 @@ container.addEventListener('click', mouseClicked);
 container.addEventListener('mousemove', movePosition);
 
 function movePosition(e){
-    console.log(e);
     let mouseAngle = getDeg(e);
     console.log(mouseAngle);
 
@@ -26,7 +25,7 @@ function getDeg(e){
 }
 
 function mouseClicked(e){
-    if(gamePlay = true){
+    if(gamePlay == true){
         animateGame = requestAnimationFrame(playGame);
     }
 }
