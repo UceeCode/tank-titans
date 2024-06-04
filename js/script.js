@@ -67,12 +67,25 @@ function randomMe(num) {
     return Math.floor(Math.random() * num);
 }
 
+function moveEnemy(){
+    let tempEnemy = document.querySelectorAll('.baddy');
+    for (let enemy of tempEnemy){
+        if(enemy.offsetTop > 550 || enemy.offsetTop < 0 || enemy.offsetLeft > 750 || enemy.offsetLeft < 0){
+            enemy.parentNode.removeChild(enemy);
+            badmaker();
+        }
+    
+        enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
+        enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
+    }
+}
+
 function badmaker() {
     let div = document.createElement('div');
     let myIcon = 'fa-' + icons[randomMe(icons.length)];
     let x, y, xmove, ymove;
     let randomStart = randomMe(4);
-    let dirSet = randomMe(4) + 1;
+    let dirSet = randomMe(5) + 1;
     let dirPos = randomMe(7) - 3;
     switch (randomStart) {
     case 0:
@@ -126,7 +139,7 @@ function moveShots() {
 function playGame() {
     if (gamePlay) {
         moveShots();
-        
+        moveEnemy();
         animateGame = requestAnimationFrame(playGame);
     }
 }
