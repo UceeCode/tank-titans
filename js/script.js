@@ -11,6 +11,11 @@ const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
 let gamePlay = false;
 let player;
 let animateGame;
+let minEnemySpeed = 0.5; 
+let maxEnemySpeed = 3.0;
+let enemySpeedIncrement = 0.1;
+let lastScore = 0; 
+let enemySpeed = minEnemySpeed; 
 btnStart.addEventListener('click', startGame);
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePostion);
@@ -46,14 +51,15 @@ function moveEnemy() {
     let tempEnemy = document.querySelectorAll('.baddy');
     let hitter = false;
     let tempShots = document.querySelectorAll('.fireme');
+
     for (let enemy of tempEnemy) {
         if (enemy.offsetTop > 550 || enemy.offsetTop < 0 || enemy.offsetLeft > 750 || enemy.offsetLeft < 0) {
             enemy.parentNode.removeChild(enemy);
             badmaker();
-        }
-        else {
-            enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
-            enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
+        } else {
+            enemy.style.top = enemy.offsetTop + enemy.movery * enemySpeed + 'px'; // Adjust speed based on enemySpeed
+            enemy.style.left = enemy.offsetLeft + enemy.moverx * enemySpeed + 'px'; // Adjust speed based on enemySpeed
+
             for (let shot of tempShots) {
                 if (isCollide(shot, enemy) && gamePlay) {
                     player.score += enemy.points;
@@ -65,6 +71,7 @@ function moveEnemy() {
                 }
             }
         }
+
         if (isCollide(box, enemy)) {
             hitter = true;
             player.lives--;
@@ -73,15 +80,27 @@ function moveEnemy() {
             }
         }
     }
+
     if (hitter) {
         base.style.backgroundColor = 'red';
         hitter = false;
-    }
-    else {
+    } else {
         base.style.backgroundColor = '';
     }
-}
 
+    // Increase enemy speed gradually as the score rises
+    if (player.score > lastScore) {
+        lastScore = player.score;
+        if (enemySpeed < maxEnemySpeed) {
+            enemySpeed += enemySpeedIncrement; // Increase speed by the increment value
+        }
+    } else {
+        // Decrease enemy speed when score is not increasing
+        if (enemySpeed > minEnemySpeed) {
+            enemySpeed -= enemySpeedIncrement; // Decrease speed by the increment value
+        }
+    }
+}
 function gameOver() {
     cancelAnimationFrame(animateGame);
     gameOverEle.style.display = 'block';
@@ -126,8 +145,8 @@ function mouseDown(e) {
         let div = document.createElement('div');
         let deg = getDeg(e);
         div.setAttribute('class', 'fireme');
-        div.moverx = 5 * Math.sin(degRad(deg));
-        div.movery = -5 * Math.cos(degRad(deg));
+        div.moverx = 10 * Math.sin(degRad(deg)); // Increase the speed here
+        div.movery = -10 * Math.cos(degRad(deg)); // Increase the speed here
         div.style.left = (boxCenter[0] - 5) + 'px';
         div.style.top = (boxCenter[1] - 5) + 'px';
         div.style.width = 10 + 'px';
