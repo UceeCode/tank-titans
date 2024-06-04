@@ -4,6 +4,8 @@ const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
 const base = document.querySelector('.base');
+let scoreDash = document.querySelector('.scoreDash');
+let progress_bar = document.querySelector('.progress-bar');
 // let rect = box.getBoundingClientRect();
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
                   , box.offsetTop + (box.offsetHeight / 2)];
@@ -21,6 +23,12 @@ function movePostion(e) {
     box.style.msTransform = 'rotate(' + deg + 'deg)';
     box.style.oTransform = 'rotate(' + deg + 'deg)';
     box.style.transform = 'rotate(' + deg + 'deg)';
+}
+
+function updateDash(){
+    scoreDash.innerHTML = player.score;
+    let tempPer = (player.lives / player.barwidth) * 100 + '%';
+    progress_bar.style.width = tempPer;
 }
 
 function isCollide(a, b){
@@ -164,6 +172,7 @@ function playGame() {
     if (gamePlay) {
         moveShots();
         moveEnemy();
+        updateDash();
         animateGame = requestAnimationFrame(playGame);
     }
 }
