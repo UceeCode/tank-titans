@@ -4,9 +4,11 @@ const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
 const base = document.querySelector('.base');
-let scoreDash = document.querySelector('.scoreDash');
-let progress_bar = document.querySelector('.progress-bar');
-// let rect = box.getBoundingClientRect();
+const scoreDash = document.querySelector('.scoreDash');
+const progressbar = document.querySelector('.progress-bar');
+// rect is a DOMRect object with eight properties: left, top, right, bottom, x, y, width, height
+/*var rect = box.getBoundingClientRect();
+console.log(rect);*/
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
                   , box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
@@ -15,7 +17,63 @@ let animateGame;
 btnStart.addEventListener('click', startGame);
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePostion);
-
+function startGame() {
+    console.log(isCollide(box, container));
+    gamePlay = true;
+    gameOverEle.style.display = 'none';
+    player = {
+        score: 0
+        , barwidth: 100
+        , lives: 100
+    }
+    setupBadguys(10);
+    animateGame = requestAnimationFrame(playGame);
+}
+function moveEnemy() {
+    let tempEnemy = document.querySelectorAll('.baddy');
+    let hitter = false;
+    for (let enemy of tempEnemy) {
+        if (enemy.offsetTop > 550 || enemy.offsetTop < 0 || enemy.offsetLeft > 750 || enemy.offsetLeft < 0) {
+            enemy.parentNode.removeChild(enemy);
+            badmaker();
+        }
+        else {
+            enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
+            enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
+        }
+        if (isCollide(box, enemy)) {
+            hitter = true;
+            player.lives--;
+            if(player.lives < 0) {gameOver();}
+        }
+    }
+    if (hitter) {
+        base.style.backgroundColor = 'red';
+        hitter = false;
+    }
+    else {
+        base.style.backgroundColor = '';
+    }
+}
+function gameOver(){
+    cancelAnimationFrame(animateGame);
+    gameOverEle.style.display = 'block';
+    gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score '+player.score;
+    gamePlay = false;
+    let tempEnemy = document.querySelectorAll('.baddy');
+    for(let enemy of tempEnemy){
+        enemy.parentNode.removeChild(enemy);   
+    }
+    let tempShots = document.querySelectorAll('.fireme');
+    for(let shot of tempShots){
+        shot.parentNode.removeChild(shot);   
+    }
+}
+function updateDash() {
+    scoreDash.innerHTML = player.score;
+    let tempPer = (player.lives / player.barwidth) * 100 + '%';
+    progressbar.style.width = tempPer;
+}
 function movePostion(e) {
     let deg = getDeg(e);
     box.style.webkitTransform = 'rotate(' + deg + 'deg)';
@@ -24,32 +82,19 @@ function movePostion(e) {
     box.style.oTransform = 'rotate(' + deg + 'deg)';
     box.style.transform = 'rotate(' + deg + 'deg)';
 }
-
-function updateDash(){
-    scoreDash.innerHTML = player.score;
-    let tempPer = (player.lives / player.barwidth) * 100 + '%';
-    progress_bar.style.width = tempPer;
-}
-
-function isCollide(a, b){
-   let aRect = a.getBoundingClientRect();
-   let BRect = b.getBoundingClientRect();
+function isCollide(a, b) {
+    let aRect = a.getBoundingClientRect();
+    let bRect = b.getBoundingClientRect();
     return !(
-        (aRect.bottom < BRect.top) || 
-        (aRect.top > BRect.bottom) ||
-        (aRect.right < BRect.left) ||
-        (aRect.left > BRect.right)
-    )
+        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
 }
 function getDeg(e) {
     let angle = Math.atan2(e.clientX - boxCenter[0], -(e.clientY - boxCenter[1]));
     return angle * (180 / Math.PI);
 }
-
 function degRad(deg) {
     return deg * (Math.PI / 180);
 }
-
 function mouseDown(e) {
     if (gamePlay) {
         let div = document.createElement('div');
@@ -64,60 +109,20 @@ function mouseDown(e) {
         container.appendChild(div);
     }
 }
-
-function startGame() {
-    gamePlay = true;
-    gameOverEle.style.display = 'none';
-    player = {
-        score: 0
-        , barwidth: 100
-        , lives: 100
-    }
-    setupBadguys(10);
-    animateGame = requestAnimationFrame(playGame);
-}
-
 function setupBadguys(num) {
     for (let x = 0; x < num; x++) {
         badmaker();
     }
 }
-
 function randomMe(num) {
     return Math.floor(Math.random() * num);
 }
-
-function moveEnemy(){
-    let tempEnemy = document.querySelectorAll('.baddy');
-    let hitter = false;
-    for (let enemy of tempEnemy){
-        if(enemy.offsetTop > 550 || enemy.offsetTop < 0 || enemy.offsetLeft > 750 || enemy.offsetLeft < 0){
-            enemy.parentNode.removeChild(enemy);
-            badmaker();
-        }
-        else{
-            enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
-            enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
-        }
-        if(isCollide(box, enemy)){
-            hitter = true;
-            player.lives--;
-        }
-    }
-    if(hitter){
-        base.style.backgroundColor = 'red';
-        hitter = false;
-    } else {
-        base.style.backgroundColor = '';
-    }
-}
-
 function badmaker() {
     let div = document.createElement('div');
     let myIcon = 'fa-' + icons[randomMe(icons.length)];
     let x, y, xmove, ymove;
     let randomStart = randomMe(4);
-    let dirSet = randomMe(5) + 1;
+    let dirSet = randomMe(5) + 2;
     let dirPos = randomMe(7) - 3;
     switch (randomStart) {
     case 0:
@@ -154,7 +159,6 @@ function badmaker() {
     div.movery = ymove;
     container.appendChild(div);
 }
-
 function moveShots() {
     let tempShots = document.querySelectorAll('.fireme');
     for (let shot of tempShots) {
@@ -167,12 +171,11 @@ function moveShots() {
         }
     }
 }
-
 function playGame() {
     if (gamePlay) {
         moveShots();
-        moveEnemy();
         updateDash();
+        moveEnemy();
         animateGame = requestAnimationFrame(playGame);
     }
 }
