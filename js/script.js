@@ -1,3 +1,4 @@
+let icons = ['bars', 'bug', 'bowling-ball', 'coffee', 'couch', 'football'];
 const btnStart = document.querySelector('.btnStart');
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
@@ -51,8 +52,20 @@ function startGame() {
             score: 0,
             barwidth: 100,
             lives: 100
-        }
+    }
+    badGuys(10);
     animateGame = requestAnimationFrame(playGame);
+}
+
+function badGuys(num){
+    for(let x = 0; x < num; x++){
+        badmaker();
+    }
+}
+
+function badmaker(){
+    let div = document.createElement('div');
+    let myIcon = 'fa' + icons;
 }
 
 function moveShots() {
@@ -71,7 +84,7 @@ function moveShots() {
 function playGame() {
     if (gamePlay) {
         moveShots();
-        
+
         animateGame = requestAnimationFrame(playGame);
     }
 }
