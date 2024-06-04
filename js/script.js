@@ -3,6 +3,7 @@ const btnStart = document.querySelector('.btnStart');
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
+const base = document.querySelector('.base');
 // let rect = box.getBoundingClientRect();
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
                   , box.offsetTop + (box.offsetHeight / 2)];
@@ -80,14 +81,26 @@ function randomMe(num) {
 
 function moveEnemy(){
     let tempEnemy = document.querySelectorAll('.baddy');
+    let hitter = false;
     for (let enemy of tempEnemy){
         if(enemy.offsetTop > 550 || enemy.offsetTop < 0 || enemy.offsetLeft > 750 || enemy.offsetLeft < 0){
             enemy.parentNode.removeChild(enemy);
             badmaker();
         }
-    
-        enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
-        enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
+        else{
+            enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
+            enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
+        }
+        if(isCollide(box, enemy)){
+            hitter = true;
+            player.lives--;
+        }
+    }
+    if(hitter){
+        base.style.backgroundColor = 'red';
+        hitter = false;
+    } else {
+        base.style.backgroundColor = '';
     }
 }
 
