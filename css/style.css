@@ -106,3 +106,13 @@
     z-index: 1;
     
 }
+
+.baddy {
+    position: absolute;
+    padding:5px;
+    text-align: center;
+    border: 1px dotted #555;
+    background-color: aliceblue;
+    border-radius: 25px;
+    
+}
