@@ -3,6 +3,7 @@ const btnStart = document.querySelector('.btnStart');
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
+// let rect = box.getBoundingClientRect();
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
                   , box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
@@ -21,6 +22,16 @@ function movePostion(e) {
     box.style.transform = 'rotate(' + deg + 'deg)';
 }
 
+function isCollide(a, b){
+   let aRect = a.getBoundingClientRect();
+   let BRect = b.getBoundingClientRect();
+    return !(
+        (aRect.bottom < BRect.top) || 
+        (aRect.top > BRect.bottom) ||
+        (aRect.right < BRect.left) ||
+        (aRect.left > BRect.right)
+    )
+}
 function getDeg(e) {
     let angle = Math.atan2(e.clientX - boxCenter[0], -(e.clientY - boxCenter[1]));
     return angle * (180 / Math.PI);
