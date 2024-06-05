@@ -6,8 +6,7 @@ const box = document.querySelector('.box');
 const base = document.querySelector('.base');
 const scoreDash = document.querySelector('.scoreDash');
 const progressbar = document.querySelector('.progress-bar');
-const boxCenter = [box.offsetLeft + (box.offsetWidth / 2)
-                  , box.offsetTop + (box.offsetHeight / 2)];
+const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
 let player;
 let animateGame;
@@ -15,22 +14,29 @@ let minEnemySpeed = 0.5;
 let maxEnemySpeed = 3.0;
 let enemySpeedIncrement = 0.1;
 let lastScore = 0; 
+
+let minEnemies = 5; // Minimum number of enemies
+let maxEnemies = 15; // Maximum number of enemies
+let enemyIncrement = 1; // Number of enemies to increment// To keep track of the last score
+let numEnemies = minEnemies;
+
 let enemySpeed = minEnemySpeed; 
 btnStart.addEventListener('click', startGame);
 container.addEventListener('mousedown', mouseDown);
-container.addEventListener('mousemove', movePostion);
+container.addEventListener('mousemove', movePosition);
 
 function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
     player = {
-        score: 0
-        , barwidth: 500
-        , lives: 500
+        score: 0,
+        barwidth: 500,
+        lives: 500
     }
-    setupBadguys(15);
+    setupBadguys(numEnemies);
     animateGame = requestAnimationFrame(playGame);
 }
+
 function playGame() {
     if (gamePlay) {
         moveShots();
@@ -39,7 +45,8 @@ function playGame() {
         animateGame = requestAnimationFrame(playGame);
     }
 }
-function movePostion(e) {
+
+function movePosition(e) {
     let deg = getDeg(e);
     box.style.webkitTransform = 'rotate(' + deg + 'deg)';
     box.style.mozTransform = 'rotate(' + deg + 'deg)';
@@ -47,6 +54,7 @@ function movePostion(e) {
     box.style.oTransform = 'rotate(' + deg + 'deg)';
     box.style.transform = 'rotate(' + deg + 'deg)';
 }
+
 function moveEnemy() {
     let tempEnemy = document.querySelectorAll('.baddy');
     let hitter = false;
@@ -88,19 +96,14 @@ function moveEnemy() {
         base.style.backgroundColor = '';
     }
 
-    // Increase enemy speed gradually as the score rises
     if (player.score > lastScore) {
         lastScore = player.score;
         if (enemySpeed < maxEnemySpeed) {
             enemySpeed += enemySpeedIncrement; // Increase speed by the increment value
         }
-    } else {
-        // Decrease enemy speed when score is not increasing
-        if (enemySpeed > minEnemySpeed) {
-            enemySpeed -= enemySpeedIncrement; // Decrease speed by the increment value
-        }
     }
 }
+
 function gameOver() {
     cancelAnimationFrame(animateGame);
     gameOverEle.style.display = 'block';
@@ -121,8 +124,6 @@ function updateDash() {
     let tempPer = (player.lives / player.barwidth) * 100 + '%';
     progressbar.style.width = tempPer;
 }
-
-
 
 function isCollide(a, b) {
     let aRect = a.getBoundingClientRect();
@@ -169,35 +170,32 @@ function badmaker() {
     let div = document.createElement('div');
     let myIcon = 'fa-' + icons[randomMe(icons.length)];
     let x, y, xmove, ymove;
-    let randomStart = randomMe(4);
-    let dirSet = randomMe(5) + 2;
-    let dirPos = randomMe(7) - 3;
-    switch (randomStart) {
-    case 0:
-        x = 0;
-        y = randomMe(600);
-        ymove = dirPos;
-        xmove = dirSet;
-        break;
-    case 1:
-        x = 800;
-        y = randomMe(600);
-        ymove = dirPos;
-        xmove = dirSet * -1;
-        break;
-    case 2:
-        x = randomMe(800);
+
+    // Adjustments to spawn enemies from any side of the container
+    let edge = Math.floor(Math.random() * 4);
+    let pos = Math.random() * (edge % 2 === 0 ? container.offsetWidth : container.offsetHeight);
+    if (edge === 0) { // Top edge
+        x = pos;
         y = 0;
-        ymove = dirSet;
-        xmove = dirPos;
-        break;
-    case 3:
-        x = randomMe(800);
-        y = 600;
-        ymove = dirSet * -1;
-        xmove = dirPos;
-        break;
+        xmove = (Math.random() * 2 - 1) * 2; // random -2 to 2
+        ymove = 2;
+    } else if (edge === 1) { // Right edge
+        x = container.offsetWidth;
+        y = pos;
+        xmove = -2;
+        ymove = (Math.random() * 2 - 1) * 2; // random -2 to 2
+    } else if (edge === 2) { // Bottom edge
+        x = pos;
+        y = container.offsetHeight;
+        xmove = (Math.random() * 2 - 1) * 2; // random -2 to 2
+        ymove = -2;
+    } else { // Left edge
+        x = 0;
+        y = pos;
+        xmove = 2;
+        ymove = (Math.random() * 2 - 1) * 2; // random -2 to 2
     }
+
     div.style.color = randomColor();
     div.innerHTML = '<i class="fas ' + myIcon + '"></i>';
     div.setAttribute('class', 'baddy');
@@ -223,8 +221,7 @@ function moveShots() {
     for (let shot of tempShots) {
         if (shot.offsetTop > 600 || shot.offsetTop < 0 || shot.offsetLeft > 800 || shot.offsetLeft < 0) {
             shot.parentNode.removeChild(shot);
-        }
-        else {
+        } else {
             shot.style.top = shot.offsetTop + shot.movery + 'px';
             shot.style.left = shot.offsetLeft + shot.moverx + 'px';
         }
