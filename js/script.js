@@ -1,26 +1,28 @@
-const icons = ["bars", "bug", "bowling-ball", "coffee", "couch", "football-ball", "gem", "laptop"];
+const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png"];
 const btnStart = document.querySelector('.btnStart');
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
-const base = document.querySelector('.base');
 const scoreDash = document.querySelector('.scoreDash');
 const progressbar = document.querySelector('.progress-bar');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
 let player;
 let animateGame;
-let minEnemySpeed = 0.5; 
+let minEnemySpeed = 0.5;
 let maxEnemySpeed = 3.0;
 let enemySpeedIncrement = 0.1;
-let lastScore = 0; 
+let lastScore = 0;
 
 let minEnemies = 5; // Minimum number of enemies
 let maxEnemies = 15; // Maximum number of enemies
-let enemyIncrement = 1; // Number of enemies to increment// To keep track of the last score
+let enemyIncrement = 1; // Number of enemies to increment
 let numEnemies = minEnemies;
 
-let enemySpeed = minEnemySpeed; 
+let enemySpeed = minEnemySpeed;
+let enemySpawnInterval = 2000; // Initial interval for enemy spawn in milliseconds
+let spawnTimer;
+
 btnStart.addEventListener('click', startGame);
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePosition);
@@ -28,14 +30,17 @@ container.addEventListener('mousemove', movePosition);
 function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
+    document.querySelector('.turet').style.display = 'block'; // Show the turret when the game starts
     player = {
         score: 0,
-        barwidth: 500,
-        lives: 500
+        barwidth: 100,
+        lives: 100
     }
     setupBadguys(numEnemies);
+    spawnTimer = setInterval(spawnEnemies, enemySpawnInterval); // Start the enemy spawn interval
     animateGame = requestAnimationFrame(playGame);
 }
+
 
 function playGame() {
     if (gamePlay) {
@@ -65,8 +70,13 @@ function moveEnemy() {
             enemy.parentNode.removeChild(enemy);
             badmaker();
         } else {
-            enemy.style.top = enemy.offsetTop + enemy.movery * enemySpeed + 'px'; // Adjust speed based on enemySpeed
-            enemy.style.left = enemy.offsetLeft + enemy.moverx * enemySpeed + 'px'; // Adjust speed based on enemySpeed
+            // Move enemies towards the turret
+            let angleToTurret = Math.atan2(boxCenter[1] - enemy.offsetTop, boxCenter[0] - enemy.offsetLeft);
+            enemy.moverx = Math.cos(angleToTurret) * enemySpeed;
+            enemy.movery = Math.sin(angleToTurret) * enemySpeed;
+            
+            enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
+            enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
 
             for (let shot of tempShots) {
                 if (isCollide(shot, enemy) && gamePlay) {
@@ -82,18 +92,20 @@ function moveEnemy() {
 
         if (isCollide(box, enemy)) {
             hitter = true;
-            player.lives--;
+            enemy.parentNode.removeChild(enemy); // Remove the enemy when it touches the turret
+            player.lives -= 5; // Decrease lives more aggressively
             if (player.lives < 0) {
                 gameOver();
             }
+            updateDash(); // Update the dashboard to reflect the change in lives
         }
     }
 
     if (hitter) {
-        base.style.backgroundColor = 'red';
+        box.style.backgroundColor = 'red';
         hitter = false;
     } else {
-        base.style.backgroundColor = '';
+        box.style.backgroundColor = '';
     }
 
     if (player.score > lastScore) {
@@ -101,13 +113,22 @@ function moveEnemy() {
         if (enemySpeed < maxEnemySpeed) {
             enemySpeed += enemySpeedIncrement; // Increase speed by the increment value
         }
+        // Gradually decrease the enemy spawn interval
+        if (enemySpawnInterval > 100) { // Minimum spawn interval to avoid excessive spawning
+            enemySpawnInterval = Math.max(50, 2000 - player.score * 20); // Adjust the formula as needed
+            clearInterval(spawnTimer);
+            spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
+        }
     }
 }
 
 function gameOver() {
     cancelAnimationFrame(animateGame);
+    clearInterval(spawnTimer); // Clear the spawn interval
     gameOverEle.style.display = 'block';
-    gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score ' + player.score;
+    document.querySelector('.turet').style.display = 'none';
+    document.querySelector('.box').style.display = 'none';
+    gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score;
     gamePlay = false;
     let tempEnemy = document.querySelectorAll('.baddy');
     for (let enemy of tempEnemy) {
@@ -157,7 +178,8 @@ function mouseDown(e) {
 }
 
 function setupBadguys(num) {
-    for (let x = 0; x < num; x++) {
+    let currentEnemies = document.querySelectorAll('.baddy').length;
+    for (let x = 0; x < num - currentEnemies; x++) {
         badmaker();
     }
 }
@@ -168,46 +190,45 @@ function randomMe(num) {
 
 function badmaker() {
     let div = document.createElement('div');
-    let myIcon = 'fa-' + icons[randomMe(icons.length)];
+    let myIcon = icons[randomMe(icons.length)];
     let x, y, xmove, ymove;
 
-    // Adjustments to spawn enemies from any side of the container
+    // Generate a random position on the border of the container
     let edge = Math.floor(Math.random() * 4);
-    let pos = Math.random() * (edge % 2 === 0 ? container.offsetWidth : container.offsetHeight);
-    if (edge === 0) { // Top edge
-        x = pos;
-        y = 0;
-        xmove = (Math.random() * 2 - 1) * 2; // random -2 to 2
-        ymove = 2;
-    } else if (edge === 1) { // Right edge
-        x = container.offsetWidth;
-        y = pos;
-        xmove = -2;
-        ymove = (Math.random() * 2 - 1) * 2; // random -2 to 2
-    } else if (edge === 2) { // Bottom edge
-        x = pos;
-        y = container.offsetHeight;
-        xmove = (Math.random() * 2 - 1) * 2; // random -2 to 2
-        ymove = -2;
-    } else { // Left edge
-        x = 0;
-        y = pos;
-        xmove = 2;
-        ymove = (Math.random() * 2 - 1) * 2; // random -2 to 2
+    let posX = Math.random() * container.offsetWidth;
+    let posY = Math.random() * container.offsetHeight;
+
+    switch (edge) {
+        case 0: // Top edge
+            x = posX;
+            y = 0;
+            break;
+        case 1: // Right edge
+            x = container.offsetWidth;
+            y = posY;
+            break;
+        case 2: // Bottom edge
+            x = posX;
+            y = container.offsetHeight;
+            break;
+        case 3: // Left edge
+            x = 0;
+            y = posY;
+            break;
     }
 
-    div.style.color = randomColor();
-    div.innerHTML = '<i class="fas ' + myIcon + '"></i>';
+    div.style.backgroundImage = `url(${myIcon})`;
+    div.style.backgroundSize = 'cover';
     div.setAttribute('class', 'baddy');
-    div.style.fontSize = randomMe(20) + 30 + 'px';
+    div.style.width = '105px'; // Set the width of the enemy
+    div.style.height = '105px'; // Set the height of the enemy
     div.style.left = x + 'px';
     div.style.top = y + 'px';
     div.points = randomMe(5) + 1;
-    div.moverx = xmove;
-    div.movery = ymove;
+    div.moverx = 0; // Initialize movement to zero
+    div.movery = 0; // Initialize movement to zero
     container.appendChild(div);
 }
-
 function randomColor() {
     function c() {
         let hex = randomMe(256).toString(16);
@@ -225,5 +246,12 @@ function moveShots() {
             shot.style.top = shot.offsetTop + shot.movery + 'px';
             shot.style.left = shot.offsetLeft + shot.moverx + 'px';
         }
+    }
+}
+
+function spawnEnemies() {
+    let currentEnemies = document.querySelectorAll('.baddy').length;
+    if (currentEnemies < numEnemies) {
+        setupBadguys(numEnemies - currentEnemies);
     }
 }
