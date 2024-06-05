@@ -1,23 +1,31 @@
-.body{
-    font-family: sans-serif;
+body {
+    font-family: 'Arial', sans-serif;
+    background: #282c34;
+    color: #61dafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .gamePlayArea {
-    width: 800px;
-    height: 600px;
-    background-color: blue;
+    width: 90vw;
+    height: 90vh;
+    background: #222;
+    position: relative;
     overflow: hidden;
+    border: 2px solid #61dafb;
+    box-shadow: 0 0 10px #61dafb;
+    border-radius: 10px;
 }
 
 .dashBoard {
-    color: white;
-    font-size: 16px;
-}
-
-.dashBoard > div {
-    width: 48%;
-    text-align:  right;
-    display: inline-block;
+    color: #61dafb;
+    font-size: 1.2rem;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .progress {
@@ -25,11 +33,12 @@
     width: 300px;
     background-color: #333;
     border-radius: 25px;
-    border: 1px solid black;
+    border: 1px solid #61dafb;
+    margin-left: 10px;
 }
 
-.progress-bar{
-    background-color: green;
+.progress-bar {
+    background-color: #61dafb;
     width: 100%;
     height: 20px;
     border-radius: 25px;
@@ -39,60 +48,70 @@
     position: absolute;
     height: 300px;
     width: 600px;
-    left:  100px;
-    background-color: #333;
-    color: white;
-    font-size: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #444;
+    color: #61dafb;
+    font-size: 1.5rem;
     text-align: center;
+    border: 2px solid #61dafb;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.btnStart{
+.btnStart {
     padding: 15px;
-    border: 1px solid white;
-    background-color: red;
-    font-size: 24px;
+    border: 1px solid #61dafb;
+    background-color: #61dafb;
+    color: #222;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
 }
 
-.container{
-    background-color: black;
-    width: 90%;
-    height: 90%;
-    border: 2.5% solid black;
-    padding: 5%;
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #333;
 }
 
 .base {
     border-radius: 5px;
     position: absolute;
-    width: 40px;
-    height: 40px;
-    left: 380px;
-    top: 280px;
-    background-color: #333;
-    color: white;
-    margin: auto;
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #61dafb;
+    z-index: 1;
 }
 
 .box {
     position: absolute;
-    left: 385px;
-    top: 285px;
-    border: 1px solid black;
-    width: 30px;
-    height: 30px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
     background-color: blue;
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
-
+    z-index: 2;
 }
+
 .turet {
     position: absolute;
     height: 100px;
-    width: 40%;
-    margin-left: 30%;
-    bottom: 30%;
+    width: 20px;
+    margin-left: 10px;
+    bottom: 50%;
+    transform: translateY(50%);
     border-radius: 5px;
     background-color: darkgray;
 }
@@ -100,19 +119,22 @@
 .fireme {
     position: absolute;
     top: 0;
-    left: 0;;
+    left: 0;
     background-color: yellow;
-    border-radius: 50px;
+    border-radius: 50%;
     z-index: 1;
-    
 }
 
 .baddy {
     position: absolute;
-    padding:5px;
+    padding: 5px;
     text-align: center;
     border: 1px dotted #555;
     background-color: aliceblue;
     border-radius: 25px;
-    
+    color: #333;
+}
+
+.life-enemy {
+    background-color: #ff3333;
 }
