@@ -1,7 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: #282c34;
-    color: #61dafb;
+    background: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,35 +11,39 @@ body {
 .gamePlayArea {
     width: 90vw;
     height: 90vh;
-    background: #222;
+    background: red;
     position: relative;
     overflow: hidden;
-    border: 2px solid #61dafb;
-    box-shadow: 0 0 10px #61dafb;
+    border: 2px solid green;
+    box-shadow: 0 0 10px green;
     border-radius: 10px;
 }
 
 .dashBoard {
-    color: #61dafb;
+    color: green;
     font-size: 1.2rem;
-    padding: 10px;
+    padding: 15px;
     display: flex;
+    background-color: black;
     justify-content: space-between;
+}
+.scoreText {
+    font-weight: bold;
+    margin-right: 5px;
 }
 
 .progress {
-    height: 20px;
+    height: 23px;
     width: 300px;
-    background-color: #333;
+    background-color: white;
     border-radius: 25px;
-    border: 1px solid #61dafb;
     margin-left: 10px;
 }
 
 .progress-bar {
-    background-color: #61dafb;
+    background-color: green;
     width: 100%;
-    height: 20px;
+    height: 23px;
     border-radius: 25px;
 }
 
@@ -51,34 +54,47 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #444;
-    color: #61dafb;
+    background-color: green;
+    color: white;
     font-size: 1.5rem;
     text-align: center;
-    border: 2px solid #61dafb;
+    border: 2px solid white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+.gameOverElement h1{
+    font-family: sans-serif;
+    font-size: 43px;
+}
 
 .btnStart {
     padding: 15px;
-    border: 1px solid #61dafb;
-    background-color: #61dafb;
-    color: #222;
+    border: 1px solid white;
+    background-color: green;
+    color: white;
+    font-family: monospace;
     font-size: 1.5rem;
     cursor: pointer;
     margin-top: 20px;
     border-radius: 5px;
 }
 
+.btnStart:hover{
+    background-color: white;
+    color: green;
+    border: 1px solid green;
+}
+
 .container {
     width: 100%;
     height: 100%;
     position: relative;
-    background-color: #333;
+    background-position: center;
+    background-size: cover;
+    background-image: url(../assets/nasa-Q1p7bh3SHj8-unsplash.jpg);
 }
 
 .base {
@@ -89,7 +105,7 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: #61dafb;
+    background-color: transparent;
     z-index: 1;
 }
 
@@ -100,39 +116,59 @@ body {
     transform: translate(-50%, -50%);
     width: 40px;
     height: 40px;
-    background-color: blue;
+    background-color: transparent;
     transition: all 0.1s ease-in-out;
     z-index: 2;
 }
 
 .turet {
     position: absolute;
-    height: 100px;
-    width: 20px;
-    margin-left: 10px;
-    bottom: 50%;
-    transform: translateY(50%);
+    width: 40px;
+    height: 80px;
+    background-color: red;
     border-radius: 5px;
-    background-color: darkgray;
+    display: none;
+}
+
+.turet::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+}
+
+.turet::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 30px;
+    background-color: black;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
 }
 
 .fireme {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: yellow;
-    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    border-radius: 50%; /* Makes the element round */
+    box-shadow: 0 0 10px 5px rgba(255, 165, 0, 0.5); /* Adds a glowing effect */
     z-index: 1;
 }
 
+
 .baddy {
     position: absolute;
-    padding: 5px;
-    text-align: center;
-    border: 1px dotted #555;
-    background-color: aliceblue;
-    border-radius: 25px;
-    color: #333;
 }
 
 .life-enemy {
