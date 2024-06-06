@@ -55,7 +55,7 @@ body {
 
 .gameOverElement {
     position: absolute;
-    height: 300px;
+    height: 400px;
     width: 600px;
     top: 50%;
     left: 50%;
@@ -75,7 +75,10 @@ body {
     padding: 20px;
     font-family: 'Russo One', sans-serif; /* Military-style font */
 }
-
+.gameOverElement img{
+    height: 150px;
+    width: 400px;
+}
 .gameOverElement h1{
     font-family: "Tiny5", sans-serif;
   font-weight: 400;
@@ -228,6 +231,27 @@ body {
         box-shadow: 0 0 15px 8px rgba(255, 69, 0, 0.7), 0 0 30px 15px rgba(255, 140, 0, 0.5);
     }
 }
+
+.explosion {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(255, 255, 0, 1) 0%, rgba(255, 0, 0, 1) 60%, rgba(255, 0, 0, 0) 100%);
+    border-radius: 50%;
+    animation: explode-animation 0.5s forwards;
+}
+
+@keyframes explode-animation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
 
 .baddy {
     position: absolute;
