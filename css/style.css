@@ -170,35 +170,41 @@ body {
 
 .turet {
     position: absolute;
-    width: 40px;
-    height: 80px;
-    background-color: red;
-    border-radius: 5px;
+    width: 60px; /* Slightly larger for a more substantial look */
+    height: 50px; /* Shorter height for a tank-like appearance */
+    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%); /* Military green gradient */
+    border-radius: 5px; /* Rounded corners for a sleek look */
+    box-shadow: 0 5px #2e3d24; /* Shadow for depth */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     display: none;
 }
 
 .turet::before {
     content: "";
     position: absolute;
-    width: 10px;
+    width: 40px; /* Shorter and thicker barrel */
     height: 10px;
-    background-color: black;
-    top: -5px;
+    background: linear-gradient(to bottom, #6b8e23, #556b2f); /* Darker green gradient */
+    top: -10px; /* Positioned above the turret body */
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 50%;
+    border-radius: 5px;
+    box-shadow: 0 2px #2e3d24;
 }
 
 .turet::after {
     content: "";
     position: absolute;
-    width: 10px;
-    height: 30px;
-    background-color: black;
-    top: 10px;
+    width: 15px; /* Wider and shorter top part */
+    height: 15px;
+    background: linear-gradient(to bottom, #6b8e23, #556b2f); /* Darker green gradient */
+    top: -20px; /* Positioned above the barrel */
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 5px;
+    border-radius: 50%;
+    box-shadow: 0 2px #2e3d24;
 }
 
 .fireme {
