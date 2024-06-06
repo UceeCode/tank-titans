@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Seymour+One&family=Tiny5&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
 body {
     font-family: 'Arial', sans-serif;
     background: black;
@@ -11,7 +13,6 @@ body {
 .gamePlayArea {
     width: 90vw;
     height: 90vh;
-    background: red;
     position: relative;
     overflow: hidden;
     border: 2px solid green;
@@ -20,12 +21,17 @@ body {
 }
 
 .dashBoard {
-    color: green;
-    font-size: 1.2rem;
+    color: #fff; /* White text color */
+    font-size: 1.5rem; /* Slightly larger font size */
     padding: 15px;
     display: flex;
-    background-color: black;
+    background: linear-gradient(to bottom, #3c523a, #2e3d24); /* Military green gradient background */
     justify-content: space-between;
+    border: 2px solid #4caf50; /* Green border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Dark shadow for depth */
+    font-family: 'Russo One', sans-serif; /* Military-style font */
+    margin: 10px; /* Margin for spacing around the dashboard */
 }
 .scoreText {
     font-weight: bold;
@@ -54,40 +60,78 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: green;
-    color: white;
-    font-size: 1.5rem;
+    background: linear-gradient(to bottom, #3c523a, #2e3d24);
+    color: #fff;
+    font-size: 2rem; /* Larger font size */
     text-align: center;
-    border: 2px solid white;
-    border-radius: 10px;
+    border: 0px solid #4caf50; /* Thicker green border */
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Dark shadow for depth */
+    text-transform: uppercase;
+    padding: 20px;
+    font-family: 'Russo One', sans-serif; /* Military-style font */
 }
+
 .gameOverElement h1{
-    font-family: sans-serif;
-    font-size: 43px;
+    font-family: "Tiny5", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 43px;
+
+}
+
+.gameOverElement .message{
+    font-size: 18px;
+    position: relative;
+    top: 18px;
+    font-family: "Seymour One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .btnStart {
-    padding: 15px;
-    border: 1px solid white;
-    background-color: green;
-    color: white;
-    font-family: monospace;
-    font-size: 1.5rem;
+    padding: 15px 30px; /* Increase padding for a bigger button */
+    border: 2px solid #4caf50; /* Green border */
+    background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%); /* Military green gradient background */
+    color: #fff; /* White text color */
+    font-family: 'Stencil', sans-serif; /* Bold, stencil-style font */
+    font-size: 1.8rem; /* Larger font size */
     cursor: pointer;
     margin-top: 20px;
-    border-radius: 5px;
+    border-radius: 10px; /* Rounded corners */
+    text-transform: uppercase; /* Uppercase text */
+    box-shadow: 0 5px #2e3d24; /* Shadow for a pressed effect */
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); /* Slight text shadow for depth */
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-.btnStart:hover{
-    background-color: white;
-    color: green;
-    border: 1px solid green;
+.btnStart::before, .btnStart::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+    z-index: -1;
+    border-radius: 10px;
 }
 
+.btnStart:hover {
+    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%); /* Darker military green on hover */
+    color: #fff;
+    border: 2px solid #4caf50;
+}
+
+.btnStart:active {
+    box-shadow: 0 2px #2e3d24; /* Reduce shadow for a pressed effect */
+    transform: translateY(2px); /* Slight downward movement */
+}
 .container {
     width: 100%;
     height: 100%;
