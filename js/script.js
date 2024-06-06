@@ -81,6 +81,7 @@ function moveEnemy() {
             for (let shot of tempShots) {
                 if (isCollide(shot, enemy) && gamePlay) {
                     player.score += enemy.points;
+                    createExplosion(enemy.offsetLeft, enemy.offsetTop);
                     enemy.parentNode.removeChild(enemy);
                     shot.parentNode.removeChild(shot);
                     updateDash();
@@ -120,6 +121,18 @@ function moveEnemy() {
             spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
         }
     }
+}
+
+function createExplosion(x, y) {
+    let explosion = document.createElement('div');
+    explosion.setAttribute('class', 'explosion');
+    explosion.style.left = x + 'px';
+    explosion.style.top = y + 'px';
+    container.appendChild(explosion);
+
+    setTimeout(() => {
+        explosion.parentNode.removeChild(explosion);
+    }, 500); // Remove the explosion after the animation is complete
 }
 
 function gameOver() {
