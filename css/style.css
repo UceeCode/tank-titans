@@ -55,7 +55,7 @@ body {
 
 .gameOverElement {
     position: absolute;
-    height: 400px;
+    height: 420px;
     width: 600px;
     top: 50%;
     left: 50%;
@@ -64,7 +64,7 @@ body {
     color: #fff;
     font-size: 2rem; /* Larger font size */
     text-align: center;
-    border: 0px solid #4caf50; /* Thicker green border */
+    
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -97,7 +97,7 @@ body {
 }
 
 .btnStart {
-    padding: 15px 30px; /* Increase padding for a bigger button */
+    padding: 12px 17px; /* Increase padding for a bigger button */
     border: 2px solid #4caf50; /* Green border */
     background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%); /* Military green gradient background */
     color: #fff; /* White text color */
