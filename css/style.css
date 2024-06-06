@@ -25,6 +25,7 @@ body {
     font-size: 1.5rem; /* Slightly larger font size */
     padding: 15px;
     display: flex;
+    align-items: center;
     background: linear-gradient(to bottom, #3c523a, #2e3d24); /* Military green gradient background */
     justify-content: space-between;
     border: 2px solid #4caf50; /* Green border */
@@ -33,9 +34,22 @@ body {
     font-family: 'Russo One', sans-serif; /* Military-style font */
     margin: 10px; /* Margin for spacing around the dashboard */
 }
+.progressContainer {
+    display: flex;
+    align-items: center;
+}
+.liveText {
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 23px;
+    color: white;
+}
+
 .scoreText {
     font-weight: bold;
     margin-right: 5px;
+    font-family: "Tiny5", sans-serif;
 }
 
 .progress {
@@ -64,7 +78,6 @@ body {
     color: #fff;
     font-size: 2rem; /* Larger font size */
     text-align: center;
-    
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -79,23 +92,39 @@ body {
     height: 150px;
     width: 400px;
 }
-.gameOverElement h1{
+.gameOverElement h1 {
     font-family: "Tiny5", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 43px;
-
+    font-weight: 400;
+    font-style: normal;
+    font-size: 43px;
+    color: white;
+    text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black;
 }
 
-.gameOverElement .message{
+.gameOverElement .message {
     font-size: 18px;
     position: relative;
     top: 18px;
     font-family: "Seymour One", sans-serif;
     font-weight: 400;
     font-style: normal;
+    text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black;
+    animation: shake-pause 1s infinite; /* Apply the animation */
 }
 
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes shake-pause {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50%, 75% { transform: translateX(0); }
+    100% { transform: translateX(5px); }
+}
 .btnStart {
     padding: 12px 17px; /* Increase padding for a bigger button */
     border: 2px solid #4caf50; /* Green border */
