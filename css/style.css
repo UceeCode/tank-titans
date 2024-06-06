@@ -160,12 +160,30 @@ body {
     left: 0;
     width: 20px;
     height: 20px;
-    background-color: orange;
-    border-radius: 50%; /* Makes the element round */
-    box-shadow: 0 0 10px 5px rgba(255, 165, 0, 0.5); /* Adds a glowing effect */
+    background: radial-gradient(circle, #ff4500 0%, #ff8c00 60%, #ff0000 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 15px 8px rgba(255, 69, 0, 0.7), 0 0 30px 15px rgba(255, 140, 0, 0.5);
     z-index: 1;
+    animation: fireball-animation 0.3s infinite;
 }
 
+@keyframes fireball-animation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 15px 8px rgba(255, 69, 0, 0.7), 0 0 30px 15px rgba(255, 140, 0, 0.5);
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+        box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8), 0 0 40px 20px rgba(255, 140, 0, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 15px 8px rgba(255, 69, 0, 0.7), 0 0 30px 15px rgba(255, 140, 0, 0.5);
+    }
+}
 
 .baddy {
     position: absolute;
