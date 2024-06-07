@@ -2,7 +2,7 @@
 
 ![Tank-titans Game](assets/ScreenShotOne.png)
 
-[Play the Game](uceecode.github.io/tank-titans/)
+[Play the Game](https://uceecode.github.io/tank-titans/)
 
 ## Description
 
