@@ -9,6 +9,7 @@ const backgroundEffect = document.getElementById('backgroundEffect');
 const backgroundMusic = document.getElementById('backgroundMusic');
 const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
+const collisionSound = document.getElementById('collisionSound');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
 let player;
@@ -113,6 +114,8 @@ function moveEnemy() {
             hitter = true;
             enemy.parentNode.removeChild(enemy); // Remove the enemy when it touches the turret
             player.lives -= 5; // Decrease lives more aggressively
+            collisionSound.currentTime = 0; // Reset the sound to the beginning
+            collisionSound.play(); // Play collision sound effect
             if (player.lives < 0) {
                 gameOver();
             }
