@@ -31,16 +31,20 @@ function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
     document.querySelector('.turet').style.display = 'block'; // Show the turret when the game starts
+    box.style.display = 'block'; // Show the box when the game starts
     player = {
         score: 0,
         barwidth: 100,
         lives: 100
     }
+    lastScore = 0;
+    enemySpeed = minEnemySpeed;
+    enemySpawnInterval = 2000;
+    clearInterval(spawnTimer);
     setupBadguys(numEnemies);
     spawnTimer = setInterval(spawnEnemies, enemySpawnInterval); // Start the enemy spawn interval
     animateGame = requestAnimationFrame(playGame);
 }
-
 
 function playGame() {
     if (gamePlay) {
@@ -143,14 +147,7 @@ function gameOver() {
     document.querySelector('.box').style.display = 'none';
     gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score;
     gamePlay = false;
-    let tempEnemy = document.querySelectorAll('.baddy');
-    for (let enemy of tempEnemy) {
-        enemy.parentNode.removeChild(enemy);
-    }
-    let tempShots = document.querySelectorAll('.fireme');
-    for (let shot of tempShots) {
-        shot.parentNode.removeChild(shot);
-    }
+    clearGameArea(); // Clear all enemies and shots
 }
 
 function updateDash() {
@@ -242,6 +239,7 @@ function badmaker() {
     div.movery = 0; // Initialize movement to zero
     container.appendChild(div);
 }
+
 function randomColor() {
     function c() {
         let hex = randomMe(256).toString(16);
@@ -266,5 +264,16 @@ function spawnEnemies() {
     let currentEnemies = document.querySelectorAll('.baddy').length;
     if (currentEnemies < numEnemies) {
         setupBadguys(numEnemies - currentEnemies);
+    }
+}
+
+function clearGameArea() {
+    let tempEnemy = document.querySelectorAll('.baddy');
+    for (let enemy of tempEnemy) {
+        enemy.parentNode.removeChild(enemy);
+    }
+    let tempShots = document.querySelectorAll('.fireme');
+    for (let shot of tempShots) {
+        shot.parentNode.removeChild(shot);
     }
 }
