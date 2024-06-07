@@ -5,6 +5,8 @@ const container = document.getElementById('container');
 const box = document.querySelector('.box');
 const scoreDash = document.querySelector('.scoreDash');
 const progressbar = document.querySelector('.progress-bar');
+const backgroundEffect = document.getElementById('backgroundEffect');
+const backgroundMusic = document.getElementById('backgroundMusic');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
 let player;
@@ -27,6 +29,9 @@ btnStart.addEventListener('click', startGame);
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePosition);
 
+// Start background effect when the script loads
+backgroundEffect.play();
+
 function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
@@ -44,6 +49,11 @@ function startGame() {
     setupBadguys(numEnemies);
     spawnTimer = setInterval(spawnEnemies, enemySpawnInterval); // Start the enemy spawn interval
     animateGame = requestAnimationFrame(playGame);
+    
+    // Stop the background effect and start the game music
+    backgroundEffect.pause();
+    backgroundEffect.currentTime = 0; // Reset the effect to the beginning
+    backgroundMusic.play();
 }
 
 function playGame() {
@@ -147,6 +157,9 @@ function gameOver() {
     document.querySelector('.box').style.display = 'none';
     gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score;
     gamePlay = false;
+    backgroundMusic.pause(); // Pause the background music
+    backgroundMusic.currentTime = 0; // Reset the music to the beginning
+    backgroundEffect.play(); // Resume the background effect
     clearGameArea(); // Clear all enemies and shots
 }
 
