@@ -7,6 +7,7 @@ const scoreDash = document.querySelector('.scoreDash');
 const progressbar = document.querySelector('.progress-bar');
 const backgroundEffect = document.getElementById('backgroundEffect');
 const backgroundMusic = document.getElementById('backgroundMusic');
+const shootSound = document.getElementById('shootSound');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
 let player;
@@ -197,6 +198,10 @@ function mouseDown(e) {
         div.style.width = 10 + 'px';
         div.style.height = 10 + 'px';
         container.appendChild(div);
+
+        // Play shooting sound effect
+        shootSound.currentTime = 0; // Reset the sound to the beginning
+        shootSound.play();
     }
 }
 
