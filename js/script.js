@@ -8,6 +8,7 @@ const progressbar = document.querySelector('.progress-bar');
 const backgroundEffect = document.getElementById('backgroundEffect');
 const backgroundMusic = document.getElementById('backgroundMusic');
 const shootSound = document.getElementById('shootSound');
+const explosionSound = document.getElementById('explosionSound');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 let gamePlay = false;
 let player;
@@ -97,6 +98,8 @@ function moveEnemy() {
                 if (isCollide(shot, enemy) && gamePlay) {
                     player.score += enemy.points;
                     createExplosion(enemy.offsetLeft, enemy.offsetTop);
+                    explosionSound.currentTime = 0; // Reset the sound to the beginning
+                    explosionSound.play(); // Play explosion sound effect
                     enemy.parentNode.removeChild(enemy);
                     shot.parentNode.removeChild(shot);
                     updateDash();
