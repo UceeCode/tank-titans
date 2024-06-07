@@ -8,3 +8,11 @@
 
 Tank Titans Game is an exciting and engaging browser-based game where players control a tank to defend against waves of incoming enemies. The goal is to survive as long as possible while racking up points by shooting enemies. As the game progresses, enemies become faster and more numerous, challenging players to improve their skills and strategy.
 
+
+## Features
+
+- **Dynamic Enemy Movement**: Enemies move towards the shooting tank from random positions on the screen borders.
+- **Increasing Difficulty**: Enemy speed and spawn rate increase as the player's score increases.
+- **Sound Effects**: Background music, shooting sounds, explosion sounds, and collision sounds for an immersive experience.
+- **Score and Health Display**: Real-time updates of the player's score and tank's life.
+- **Game Over Screen**: Display the final score and a game over message when the tank's life reaches zero.
