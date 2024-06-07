@@ -1,4 +1,4 @@
-const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png"];
+const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png"];
 const btnStart = document.querySelector('.btnStart');
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
