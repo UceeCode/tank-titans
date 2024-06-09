@@ -14,8 +14,8 @@ const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.
 let gamePlay = false;
 let player;
 let animateGame;
-let minEnemySpeed = 0.5;
-let maxEnemySpeed = 3.0;
+let minEnemySpeed = 0.3;
+let maxEnemySpeed = 2.9;
 let enemySpeedIncrement = 0.1;
 let lastScore = 0;
 
@@ -46,11 +46,13 @@ function startGame() {
         lives: 100
     }
     lastScore = 0;
+    minEnemySpeed = 0.6;
     enemySpeed = minEnemySpeed;
     enemySpawnInterval = 2000;
     clearInterval(spawnTimer);
     setupBadguys(numEnemies);
     moveEnemy(); // Start moving enemies immediately
+    spawnEnemies();
     spawnTimer = setInterval(spawnEnemies, enemySpawnInterval); // Start the enemy spawn interval
     animateGame = requestAnimationFrame(playGame);
 
@@ -144,6 +146,7 @@ function moveEnemy() {
         }
     }
 }
+
 
 function createExplosion(x, y) {
     let explosion = document.createElement('div');
