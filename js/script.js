@@ -32,7 +32,7 @@ btnStart.addEventListener('click', startGame);
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePosition);
 
-// Start background effect when the script loads
+
 backgroundEffect.play();
 
 function startGame() {
@@ -50,9 +50,10 @@ function startGame() {
     enemySpawnInterval = 2000;
     clearInterval(spawnTimer);
     setupBadguys(numEnemies);
+    moveEnemy(); // Start moving enemies immediately
     spawnTimer = setInterval(spawnEnemies, enemySpawnInterval); // Start the enemy spawn interval
     animateGame = requestAnimationFrame(playGame);
-    
+
     // Stop the background effect and start the game music
     backgroundEffect.pause();
     backgroundEffect.currentTime = 0; // Reset the effect to the beginning
@@ -63,7 +64,7 @@ function playGame() {
     if (gamePlay) {
         moveShots();
         updateDash();
-        moveEnemy();
+        moveEnemy(); // Move the enemies continuously
         animateGame = requestAnimationFrame(playGame);
     }
 }
@@ -91,7 +92,7 @@ function moveEnemy() {
             let angleToTurret = Math.atan2(boxCenter[1] - enemy.offsetTop, boxCenter[0] - enemy.offsetLeft);
             enemy.moverx = Math.cos(angleToTurret) * enemySpeed;
             enemy.movery = Math.sin(angleToTurret) * enemySpeed;
-            
+
             enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
             enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
 
@@ -264,13 +265,6 @@ function badmaker() {
     container.appendChild(div);
 }
 
-function randomColor() {
-    function c() {
-        let hex = randomMe(256).toString(16);
-        return ('0' + String(hex)).substr(-2);
-    }
-    return '#' + c() + c() + c();
-}
 
 function moveShots() {
     let tempShots = document.querySelectorAll('.fireme');
