@@ -69,6 +69,33 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Shadow for 3D effect */
     transition: width 0.5s ease-in-out; /* Smooth transition for width change */
 }
+.btnPause {
+    padding: 10px 10px;
+    border: 2px solid #4caf50; /* Green border */
+    background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%); /* Military green gradient background */
+    color: #fff; /* White text color */
+    font-family: 'Stencil', sans-serif; /* Bold, stencil-style font */
+    font-size: 15px; /* Larger font size */
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    text-transform: uppercase; /* Uppercase text */
+    box-shadow: 0 5px #2e3d24; /* Shadow for a pressed effect */
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); /* Slight text shadow for depth */
+    position: relative;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.btnPause:hover {
+    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%); /* Darker military green on hover */
+    color: #fff;
+    border: 2px solid #4caf50;
+}
+
+.btnPause:active {
+    box-shadow: 0 2px #2e3d24; /* Reduce shadow for a pressed effect */
+    transform: translateY(2px); /* Slight downward movement */
+}
 .gameOverElement {
     position: absolute;
     height: 420px;

@@ -1,5 +1,6 @@
 const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png"];
 const btnStart = document.querySelector('.btnStart');
+const btnPause = document.querySelector('.btnPause'); // Select the pause button
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
@@ -11,7 +12,9 @@ const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
 const collisionSound = document.getElementById('collisionSound');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
+
 let gamePlay = false;
+let gamePaused = false; // Track if the game is paused
 let player;
 let animateGame;
 let minEnemySpeed = 0.3;
@@ -29,8 +32,15 @@ let enemySpawnInterval = 2000; // Initial interval for enemy spawn in millisecon
 let spawnTimer;
 
 btnStart.addEventListener('click', startGame);
+btnPause.addEventListener('click', togglePause); // Add event listener to pause button
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePosition);
+
+document.addEventListener('keydown', function(event) {
+    if (event.code === 'Space') {
+        togglePause(); // Call the togglePause function when spacebar is pressed
+    }
+});
 
 
 backgroundEffect.play();
@@ -62,8 +72,28 @@ function startGame() {
     backgroundMusic.play();
 }
 
-function playGame() {
+function togglePause() {
     if (gamePlay) {
+        if (!gamePaused) {
+            // Pause the game
+            cancelAnimationFrame(animateGame);
+            clearInterval(spawnTimer);
+            backgroundMusic.pause();
+            gamePaused = true;
+            btnPause.innerHTML = '<i class="fas fa-play"></i>'; // Change icon to play
+        } else {
+            // Resume the game
+            animateGame = requestAnimationFrame(playGame);
+            spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
+            backgroundMusic.play();
+            gamePaused = false;
+            btnPause.innerHTML = '<i class="fas fa-pause"></i>'; // Change icon to pause
+        }
+    }
+}
+
+function playGame() {
+    if (gamePlay && !gamePaused) {
         moveShots();
         updateDash();
         moveEnemy(); // Move the enemies continuously
@@ -147,7 +177,6 @@ function moveEnemy() {
     }
 }
 
-
 function createExplosion(x, y) {
     let explosion = document.createElement('div');
     explosion.setAttribute('class', 'explosion');
@@ -168,6 +197,7 @@ function gameOver() {
     document.querySelector('.box').style.display = 'none';
     gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score;
     gamePlay = false;
+    gamePaused = false; // Reset pause state
     backgroundMusic.pause(); // Pause the background music
     backgroundMusic.currentTime = 0; // Reset the music to the beginning
     backgroundEffect.play(); // Resume the background effect
@@ -197,7 +227,7 @@ function degRad(deg) {
 }
 
 function mouseDown(e) {
-    if (gamePlay) {
+    if (gamePlay && !gamePaused) { // Check if the game is not paused
         let div = document.createElement('div');
         let deg = getDeg(e);
         div.setAttribute('class', 'fireme');
@@ -267,7 +297,6 @@ function badmaker() {
     div.movery = 0; // Initialize movement to zero
     container.appendChild(div);
 }
-
 
 function moveShots() {
     let tempShots = document.querySelectorAll('.fireme');
