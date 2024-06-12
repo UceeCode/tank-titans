@@ -96,6 +96,33 @@ body {
     box-shadow: 0 2px #2e3d24;
     transform: translateY(2px);
 }
+.pauseText {
+    z-index: 3;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: white;
+    text-shadow: 
+        1px 1px 0 #4caf50,   /* green shadow */
+        2px 2px 0 #388e3c,   /* darker green shadow */
+        3px 3px 0 #2e7d32,   /* even darker green shadow */
+        4px 4px 0 rgba(0, 0, 0, 0.3);  /* soft black shadow for depth */
+    padding: 15px 30px;
+    background: linear-gradient(to bottom, #6b8e23 0%, #3c523a 100%);
+    border: 2px solid #4caf50;
+    border-radius: 7px;
+    box-shadow: 
+        0 5px #2e3d24,   /* dark shadow underneath */
+        0 1px 10px rgba(0, 0, 0, 0.4);  /* soft shadow for more depth */
+    transition: transform 0.2s ease;
+}
+
 .gameOverElement {
     position: absolute;
     height: 420px;

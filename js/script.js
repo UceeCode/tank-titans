@@ -1,6 +1,7 @@
 const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png"];
 const btnStart = document.querySelector('.btnStart');
-const btnPause = document.querySelector('.btnPause'); // Select the pause button
+const btnPause = document.querySelector('.btnPause');
+const pauseText = document.getElementById('pauseText');
 const gameOverEle = document.getElementById('gameOverElement');
 const container = document.getElementById('container');
 const box = document.querySelector('.box');
@@ -80,6 +81,7 @@ function togglePause() {
             clearInterval(spawnTimer);
             backgroundMusic.pause();
             gamePaused = true;
+            pauseText.style.display = 'block';
             btnPause.innerHTML = '<i class="fas fa-play"></i>'; // Change icon to play
         } else {
             // Resume the game
@@ -87,6 +89,7 @@ function togglePause() {
             spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
             backgroundMusic.play();
             gamePaused = false;
+            pauseText.style.display = 'none';
             btnPause.innerHTML = '<i class="fas fa-pause"></i>'; // Change icon to pause
         }
     }
