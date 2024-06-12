@@ -1,4 +1,4 @@
-const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png"];
+const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png", "assets/Scary.png"];
 const btnStart = document.querySelector('.btnStart');
 const btnPause = document.querySelector('.btnPause');
 const pauseText = document.getElementById('pauseText');
