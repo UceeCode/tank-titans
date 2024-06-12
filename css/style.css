@@ -21,18 +21,18 @@ body {
 }
 
 .dashBoard {
-    color: #fff; /* White text color */
-    font-size: 1.5rem; /* Slightly larger font size */
+    color: #fff;
+    font-size: 1.5rem;
     padding: 15px;
     display: flex;
     align-items: center;
-    background: linear-gradient(to bottom, #3c523a, #2e3d24); /* Military green gradient background */
+    background: linear-gradient(to bottom, #3c523a, #2e3d24);
     justify-content: space-between;
-    border: 2px solid #4caf50; /* Green border */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Dark shadow for depth */
-    font-family: 'Russo One', sans-serif; /* Military-style font */
-    margin: 10px; /* Margin for spacing around the dashboard */
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Russo One', sans-serif;
+    margin: 10px;
 }
 .progressContainer {
     display: flex;
@@ -55,46 +55,46 @@ body {
 .progress {
     height: 23px;
     width: 300px;
-    background-color: #f0f0f0; /* Light gray background */
+    background-color: #f0f0f0;
     border-radius: 25px;
     margin-left: 10px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.2); /* Inset shadow for depth */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
 }
 
 .progress-bar {
-    background-color: #4CAF50; /* Green color for the progress */
-    width: 0; /* Start with 0 width */
+    background-color: #4CAF50;
+    width: 0;
     height: 23px;
     border-radius: 25px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Shadow for 3D effect */
-    transition: width 0.5s ease-in-out; /* Smooth transition for width change */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: width 0.5s ease-in-out;
 }
 .btnPause {
-    padding: 10px 10px;
-    border: 2px solid #4caf50; /* Green border */
-    background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%); /* Military green gradient background */
-    color: #fff; /* White text color */
-    font-family: 'Stencil', sans-serif; /* Bold, stencil-style font */
-    font-size: 15px; /* Larger font size */
+    padding: 3px 6px;
+    border: 2px solid #4caf50;
+    background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%);
+    color: #fff;
+    font-family: 'Stencil', sans-serif;
+    font-size: 13px;
     cursor: pointer;
-    border-radius: 10px; /* Rounded corners */
-    text-transform: uppercase; /* Uppercase text */
-    box-shadow: 0 5px #2e3d24; /* Shadow for a pressed effect */
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); /* Slight text shadow for depth */
+    border-radius: 10px;
+    text-transform: uppercase;
+    box-shadow: 0 5px #2e3d24;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     position: relative;
     transition: all 0.3s ease;
     margin-left: 10px;
 }
 
 .btnPause:hover {
-    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%); /* Darker military green on hover */
+    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%);
     color: #fff;
     border: 2px solid #4caf50;
 }
 
 .btnPause:active {
-    box-shadow: 0 2px #2e3d24; /* Reduce shadow for a pressed effect */
-    transform: translateY(2px); /* Slight downward movement */
+    box-shadow: 0 2px #2e3d24;
+    transform: translateY(2px);
 }
 .gameOverElement {
     position: absolute;
@@ -105,19 +105,19 @@ body {
     transform: translate(-50%, -50%);
     background: linear-gradient(to bottom, #3c523a, #2e3d24);
     color: #fff;
-    font-size: 2rem; /* Larger font size */
+    font-size: 2rem;
     text-align: center;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Dark shadow for depth */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
     text-transform: uppercase;
     padding: 20px;
-    font-family: 'Russo One', sans-serif; /* Military-style font */
+    font-family: 'Russo One', sans-serif;
 }
-.gameOverElement img{
+.gameOverElement img {
     height: 150px;
     width: 400px;
 }
@@ -138,7 +138,7 @@ body {
     font-weight: 400;
     font-style: normal;
     text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black;
-    animation: shake-pause 1s infinite; /* Apply the animation */
+    animation: shake-pause 1s infinite;
 }
 
 @keyframes shake {
@@ -155,18 +155,18 @@ body {
     100% { transform: translateX(5px); }
 }
 .btnStart {
-    padding: 12px 17px; /* Increase padding for a bigger button */
-    border: 2px solid #4caf50; /* Green border */
-    background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%); /* Military green gradient background */
-    color: #fff; /* White text color */
-    font-family: 'Stencil', sans-serif; /* Bold, stencil-style font */
-    font-size: 1.8rem; /* Larger font size */
+    padding: 12px 17px;
+    border: 2px solid #4caf50;
+    background: linear-gradient(to bottom, #5e7d32 0%, #3c523a 100%);
+    color: #fff;
+    font-family: 'Stencil', sans-serif;
+    font-size: 1.8rem;
     cursor: pointer;
     margin-top: 20px;
-    border-radius: 10px; /* Rounded corners */
-    text-transform: uppercase; /* Uppercase text */
-    box-shadow: 0 5px #2e3d24; /* Shadow for a pressed effect */
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); /* Slight text shadow for depth */
+    border-radius: 10px;
+    text-transform: uppercase;
+    box-shadow: 0 5px #2e3d24;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     position: relative;
     transition: all 0.3s ease;
 }
@@ -184,14 +184,14 @@ body {
 }
 
 .btnStart:hover {
-    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%); /* Darker military green on hover */
+    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%);
     color: #fff;
     border: 2px solid #4caf50;
 }
 
 .btnStart:active {
-    box-shadow: 0 2px #2e3d24; /* Reduce shadow for a pressed effect */
-    transform: translateY(2px); /* Slight downward movement */
+    box-shadow: 0 2px #2e3d24;
+    transform: translateY(2px);
 }
 .container {
     width: 100%;
@@ -228,11 +228,11 @@ body {
 
 .turet {
     position: absolute;
-    width: 60px; /* Slightly larger for a more substantial look */
-    height: 50px; /* Shorter height for a tank-like appearance */
-    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%); /* Military green gradient */
-    border-radius: 5px; /* Rounded corners for a sleek look */
-    box-shadow: 0 5px #2e3d24; /* Shadow for depth */
+    width: 60px;
+    height: 50px;
+    background: linear-gradient(to bottom, #4a6d29 0%, #334229 100%);
+    border-radius: 5px;
+    box-shadow: 0 5px #2e3d24;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -242,10 +242,10 @@ body {
 .turet::before {
     content: "";
     position: absolute;
-    width: 40px; /* Shorter and thicker barrel */
+    width: 40px;
     height: 10px;
-    background: linear-gradient(to bottom, #6b8e23, #556b2f); /* Darker green gradient */
-    top: -10px; /* Positioned above the turret body */
+    background: linear-gradient(to bottom, #6b8e23, #556b2f);
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 5px;
@@ -255,10 +255,10 @@ body {
 .turet::after {
     content: "";
     position: absolute;
-    width: 15px; /* Wider and shorter top part */
+    width: 15px;
     height: 15px;
-    background: linear-gradient(to bottom, #6b8e23, #556b2f); /* Darker green gradient */
-    top: -20px; /* Positioned above the barrel */
+    background: linear-gradient(to bottom, #6b8e23, #556b2f);
+    top: -20px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
@@ -315,7 +315,6 @@ body {
         opacity: 0;
     }
 }
-
 
 .baddy {
     position: absolute;
