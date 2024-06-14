@@ -200,7 +200,7 @@ function gameOver() {
     gameOverEle.style.display = 'block';
     document.querySelector('.turet').style.display = 'none';
     document.querySelector('.box').style.display = 'none';
-    gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score;
+    gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score + '<br>';
     gamePlay = false;
     gamePaused = false; // Reset pause state
     backgroundMusic.pause(); // Pause the background music
