@@ -12,6 +12,7 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
 const collisionSound = document.getElementById('collisionSound');
+let info = document.getElementById('info');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 
 let gamePlay = false;
@@ -49,6 +50,7 @@ backgroundEffect.play();
 function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
+    info.style.display = 'block';
     document.querySelector('.turet').style.display = 'block'; // Show the turret when the game starts
     box.style.display = 'block'; // Show the box when the game starts
     player = {
@@ -245,6 +247,8 @@ function mouseDown(e) {
         // Play shooting sound effect
         shootSound.currentTime = 0; // Reset the sound to the beginning
         shootSound.play();
+
+        info.style.display = 'none';
     }
 }
 
