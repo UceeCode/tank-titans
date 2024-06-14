@@ -1,6 +1,6 @@
 # Tank-titans Game
 
-![Tank-titans Game](assets/ScreenShotOne.png)
+![Tank-titans Game](assets/gameScreenshot.png)
 
 [Play the Game](https://uceecode.github.io/tank-titans/)
 
@@ -15,6 +15,7 @@ Tank Titans Game is an exciting and engaging browser-based game where players co
 - **Increasing Difficulty**: Enemy speed and spawn rate increase as the player's score increases.
 - **Sound Effects**: Background music, shooting sounds, explosion sounds, and collision sounds for an immersive experience.
 - **Score and Health Display**: Real-time updates of the player's score and tank's life.
+- **Pause Button**: Pause button to pause and play the game.
 - **Game Over Screen**: Display the final score and a game over message when the tank's life reaches zero.
 
 
@@ -31,4 +32,5 @@ Tank Titans Game is an exciting and engaging browser-based game where players co
 3. **Shoot**: Click the mouse to shoot at incoming enemies.
 4. **Survive**: Prevent enemies from reaching and hitting the tank. Your life decreases with each hit.
 5. **Score Points**: Shoot enemies to earn points. Try to beat your high score!.
+6. **Pause**: Click on the space bar or pause icon to pause the game.
 
