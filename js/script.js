@@ -12,7 +12,10 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
 const collisionSound = document.getElementById('collisionSound');
+
 let info = document.getElementById('info');
+let gamePlayArea = document.getElementById('gamePlayArea');
+let dashboard= document.getElementById('dashBoard');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 
 let gamePlay = false;
@@ -154,11 +157,18 @@ function moveEnemy() {
             player.lives -= 5; // Decrease lives more aggressively
             collisionSound.currentTime = 0; // Reset the sound to the beginning
             collisionSound.play(); // Play collision sound effect
+            gamePlayArea.classList.add('blink-red');
+            dashboard.classList.add('blink-red');
+            setTimeout(() => {
+                gamePlayArea.classList.remove('blink-red');
+                dashboard.classList.remove('blink-red');
+            }, 500); // Remove the class after the blinking effect
             if (player.lives < 0) {
                 gameOver();
             }
             updateDash(); // Update the dashboard to reflect the change in lives
-        }
+        } 
+
     }
 
     if (hitter) {
@@ -219,7 +229,8 @@ function isCollide(a, b) {
     let aRect = a.getBoundingClientRect();
     let bRect = b.getBoundingClientRect();
     return !(
-        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
+        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right)
+    );
 }
 
 function getDeg(e) {
@@ -266,7 +277,7 @@ function randomMe(num) {
 function badmaker() {
     let div = document.createElement('div');
     let myIcon = icons[randomMe(icons.length)];
-    let x, y, xmove, ymove;
+    let x, y;
 
     // Generate a random position on the border of the container
     let edge = Math.floor(Math.random() * 4);
