@@ -15,7 +15,7 @@ const collisionSound = document.getElementById('collisionSound');
 
 let info = document.getElementById('info');
 let gamePlayArea = document.getElementById('gamePlayArea');
-let dashboard= document.getElementById('dashBoard');
+let dashboard = document.getElementById('dashBoard');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 
 let gamePlay = false;
@@ -46,7 +46,6 @@ document.addEventListener('keydown', function(event) {
         togglePause(); // Call the togglePause function when spacebar is pressed
     }
 });
-
 
 backgroundEffect.play();
 
@@ -167,8 +166,7 @@ function moveEnemy() {
                 gameOver();
             }
             updateDash(); // Update the dashboard to reflect the change in lives
-        } 
-
+        }
     }
 
     if (hitter) {
@@ -211,12 +209,23 @@ function gameOver() {
     document.querySelector('.turet').style.display = 'none';
     document.querySelector('.box').style.display = 'none';
     gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score + '<br>';
+    updateHighScore(player.score); // Update high score
     gamePlay = false;
     gamePaused = false; // Reset pause state
     backgroundMusic.pause(); // Pause the background music
     backgroundMusic.currentTime = 0; // Reset the music to the beginning
     backgroundEffect.play(); // Resume the background effect
     clearGameArea(); // Clear all enemies and shots
+}
+
+function updateHighScore(score) {
+    let highScore = localStorage.getItem('highScore');
+    if (!highScore || score > highScore) {
+        localStorage.setItem('highScore', score);
+        gameOverEle.querySelector('span').innerHTML += 'New High Score: ' + score;
+    } else {
+        gameOverEle.querySelector('span').innerHTML += 'High Score: ' + highScore;
+    }
 }
 
 function updateDash() {
