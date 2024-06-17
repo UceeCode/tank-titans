@@ -371,14 +371,18 @@ body {
 }
 .link {
     color: white;
-    position: relative;
-    top: 585px;
+    position: fixed; /* Change from relative to fixed */
+    bottom: 7px; /* Position it 10px from the bottom of the viewport */
     text-align: center;
     user-select: none;
     font-family: "Tiny5", sans-serif;
     font-weight: 400;
     font-style: normal;
+    margin: 0px auto;
     font-size: 18px;
+    z-index: 1000;
+    width: 100%;
+    right: 3px;
 }
 .link a {
     color: white;
