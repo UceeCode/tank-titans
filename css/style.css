@@ -371,8 +371,8 @@ body {
 }
 .link {
     color: white;
-    position: fixed; /* Change from relative to fixed */
-    bottom: 7px; /* Position it 10px from the bottom of the viewport */
+    position: fixed; 
+    bottom: 7px; 
     text-align: center;
     user-select: none;
     font-family: "Tiny5", sans-serif;
@@ -386,4 +386,7 @@ body {
 }
 .link a {
     color: white;
+}
+.link a:hover{
+    color: #2e7d32;
 }
