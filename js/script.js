@@ -13,6 +13,7 @@ const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
 const collisionSound = document.getElementById('collisionSound');
 
+let link = document.getElementById('link');
 let info = document.getElementById('info');
 let gamePlayArea = document.getElementById('gamePlayArea');
 let dashboard = document.getElementById('dashBoard');
@@ -53,6 +54,7 @@ function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
     info.style.display = 'block';
+    link.style.display = 'none';
     document.querySelector('.turet').style.display = 'block'; // Show the turret when the game starts
     box.style.display = 'block'; // Show the box when the game starts
     player = {
@@ -269,6 +271,7 @@ function mouseDown(e) {
         shootSound.play();
 
         info.style.display = 'none';
+        link.style.display = 'block';
     }
 }
 
