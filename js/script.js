@@ -276,7 +276,6 @@ function updateHighScore(score) {
 }
 
 // Function to update score and progress bar in UI
-// Function to update score and progress bar in UI
 function updateDash() {
     scoreDash.innerHTML = player.score;
     let tempPer = (player.lives / player.barwidth) * 100 + '%';
