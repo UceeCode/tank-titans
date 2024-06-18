@@ -390,3 +390,17 @@ body {
 .link a:hover{
     color: #2e7d32;
 }
+
+@media (max-width: 600px) {
+    .dashBoard {
+        flex-direction: column;
+        align-items: center;
+    }
+    .progressContainer {
+        width: 100%;
+    }
+    .btnPause {
+        margin-top: 10px;
+    }
+}
+
