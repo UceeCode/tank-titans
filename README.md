@@ -1,6 +1,6 @@
 # Tank-titans Game
 
-![Tank-titans Game](assets/gameScreenshot.png)
+![Tank-titans Game](UpdatedScreenshot.png)
 
 [Play the Game](https://uceecode.github.io/tank-titans/)
 
