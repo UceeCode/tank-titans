@@ -1,4 +1,11 @@
-const icons = ["assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png", "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png", "assets/Scary.png"];
+// Define your icons array and constants
+const icons = [
+    "assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png",
+    "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png",
+    "assets/Scary.png"
+];
+
+// Select necessary DOM elements
 const btnStart = document.querySelector('.btnStart');
 const btnPause = document.querySelector('.btnPause');
 const pauseText = document.getElementById('pauseText');
@@ -12,15 +19,18 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
 const collisionSound = document.getElementById('collisionSound');
+const playerLevelElement = document.getElementById('levelValue'); // Updated to use const
 
+// Additional elements from your HTML (assuming they exist)
 let link = document.getElementById('link');
 let info = document.getElementById('info');
 let gamePlayArea = document.getElementById('gamePlayArea');
 let dashboard = document.getElementById('dashBoard');
 const boxCenter = [box.offsetLeft + (box.offsetWidth / 2), box.offsetTop + (box.offsetHeight / 2)];
 
+// Game state variables
 let gamePlay = false;
-let gamePaused = false; // Track if the game is paused
+let gamePaused = false;
 let player;
 let animateGame;
 let minEnemySpeed = 0.3;
@@ -28,57 +38,66 @@ let maxEnemySpeed = 2.9;
 let enemySpeedIncrement = 0.1;
 let lastScore = 0;
 
-let minEnemies = 5; // Minimum number of enemies
-let maxEnemies = 15; // Maximum number of enemies
-let enemyIncrement = 1; // Number of enemies to increment
+let minEnemies = 5;
+let maxEnemies = 15;
+let enemyIncrement = 1;
 let numEnemies = minEnemies;
 
 let enemySpeed = minEnemySpeed;
-let enemySpawnInterval = 2000; // Initial interval for enemy spawn in milliseconds
+let enemySpawnInterval = 2000;
 let spawnTimer;
+let currentLevel = 1; // Initialize current level
 
+// Event listeners for buttons and mouse actions
 btnStart.addEventListener('click', startGame);
-btnPause.addEventListener('click', togglePause); // Add event listener to pause button
+btnPause.addEventListener('click', togglePause);
 container.addEventListener('mousedown', mouseDown);
 container.addEventListener('mousemove', movePosition);
 
 document.addEventListener('keydown', function(event) {
     if (event.code === 'Space') {
-        togglePause(); // Call the togglePause function when spacebar is pressed
+        togglePause();
     }
 });
 
+// Play initial background effect
 backgroundEffect.play();
 
+// Function to start the game
 function startGame() {
     gamePlay = true;
     gameOverEle.style.display = 'none';
     info.style.display = 'block';
     link.style.display = 'none';
-    document.querySelector('.turet').style.display = 'block'; // Show the turret when the game starts
-    box.style.display = 'block'; // Show the box when the game starts
+    document.querySelector('.turet').style.display = 'block';
+    box.style.display = 'block';
     player = {
         score: 0,
         barwidth: 100,
         lives: 100
-    }
+    };
     lastScore = 0;
-    minEnemySpeed = 0.6;
+    minEnemySpeed = 0.8; // Adjusted minimum enemy speed
     enemySpeed = minEnemySpeed;
     enemySpawnInterval = 2000;
     clearInterval(spawnTimer);
     setupBadguys(numEnemies);
-    moveEnemy(); // Start moving enemies immediately
+    moveEnemy();
     spawnEnemies();
-    spawnTimer = setInterval(spawnEnemies, enemySpawnInterval); // Start the enemy spawn interval
+    spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
     animateGame = requestAnimationFrame(playGame);
 
-    // Stop the background effect and start the game music
+    // Stop background effect and play game music
     backgroundEffect.pause();
-    backgroundEffect.currentTime = 0; // Reset the effect to the beginning
+    backgroundEffect.currentTime = 0;
     backgroundMusic.play();
+
+    // Update current level display
+    currentLevel = 1;
+    playerLevelElement.textContent = currentLevel;
 }
 
+// Function to toggle pause/resume game
 function togglePause() {
     if (gamePlay) {
         if (!gamePaused) {
@@ -88,7 +107,7 @@ function togglePause() {
             backgroundMusic.pause();
             gamePaused = true;
             pauseText.style.display = 'block';
-            btnPause.innerHTML = '<i class="fas fa-play"></i>'; // Change icon to play
+            btnPause.innerHTML = '<i class="fas fa-play"></i>';
         } else {
             // Resume the game
             animateGame = requestAnimationFrame(playGame);
@@ -96,20 +115,38 @@ function togglePause() {
             backgroundMusic.play();
             gamePaused = false;
             pauseText.style.display = 'none';
-            btnPause.innerHTML = '<i class="fas fa-pause"></i>'; // Change icon to pause
+            btnPause.innerHTML = '<i class="fas fa-pause"></i>';
         }
     }
 }
 
+// Function to play the game
 function playGame() {
     if (gamePlay && !gamePaused) {
         moveShots();
         updateDash();
-        moveEnemy(); // Move the enemies continuously
+        moveEnemy();
+
+        // Check if the player has reached the next level
+        if (player.score >= currentLevel * 100) {
+            currentLevel++; // Increase the current level
+            playerLevelElement.textContent = currentLevel; // Update level display
+
+             // Display popup message
+             let popupMessage = document.querySelector('.popup-message');
+             popupMessage.style.display = 'block';
+ 
+             // Hide popup message after 2 seconds (adjust timing as needed)
+             setTimeout(() => {
+                 popupMessage.style.display = 'none';
+             }, 2000);
+        }
+
         animateGame = requestAnimationFrame(playGame);
     }
 }
 
+// Function to move the turret based on mouse position
 function movePosition(e) {
     let deg = getDeg(e);
     box.style.webkitTransform = 'rotate(' + deg + 'deg)';
@@ -119,6 +156,7 @@ function movePosition(e) {
     box.style.transform = 'rotate(' + deg + 'deg)';
 }
 
+// Function to move enemies towards the turret
 function moveEnemy() {
     let tempEnemy = document.querySelectorAll('.baddy');
     let hitter = false;
@@ -126,6 +164,7 @@ function moveEnemy() {
 
     for (let enemy of tempEnemy) {
         if (enemy.offsetTop > 550 || enemy.offsetTop < 0 || enemy.offsetLeft > 750 || enemy.offsetLeft < 0) {
+            // Remove enemy if out of bounds and create a new one
             enemy.parentNode.removeChild(enemy);
             badmaker();
         } else {
@@ -137,27 +176,29 @@ function moveEnemy() {
             enemy.style.top = enemy.offsetTop + enemy.movery + 'px';
             enemy.style.left = enemy.offsetLeft + enemy.moverx + 'px';
 
+            // Check collision between shots and enemies
             for (let shot of tempShots) {
                 if (isCollide(shot, enemy) && gamePlay) {
                     player.score += enemy.points;
                     createExplosion(enemy.offsetLeft, enemy.offsetTop);
-                    explosionSound.currentTime = 0; // Reset the sound to the beginning
-                    explosionSound.play(); // Play explosion sound effect
+                    explosionSound.currentTime = 0;
+                    explosionSound.play();
                     enemy.parentNode.removeChild(enemy);
                     shot.parentNode.removeChild(shot);
                     updateDash();
-                    badmaker();
+                    badmaker(); // Create a new enemy
                     break;
                 }
             }
         }
 
+        // Check collision between turret and enemies
         if (isCollide(box, enemy)) {
             hitter = true;
-            enemy.parentNode.removeChild(enemy); // Remove the enemy when it touches the turret
-            player.lives -= 5; // Decrease lives more aggressively
-            collisionSound.currentTime = 0; // Reset the sound to the beginning
-            collisionSound.play(); // Play collision sound effect
+            enemy.parentNode.removeChild(enemy);
+            player.lives -= 5; // Decrease lives on collision
+            collisionSound.currentTime = 0;
+            collisionSound.play();
             gamePlayArea.classList.add('blink-red');
             dashboard.classList.add('blink-red');
             setTimeout(() => {
@@ -167,10 +208,11 @@ function moveEnemy() {
             if (player.lives < 0) {
                 gameOver();
             }
-            updateDash(); // Update the dashboard to reflect the change in lives
+            updateDash();
         }
     }
 
+    // Highlight the turret on collision with enemies
     if (hitter) {
         box.style.backgroundColor = 'red';
         hitter = false;
@@ -178,20 +220,18 @@ function moveEnemy() {
         box.style.backgroundColor = '';
     }
 
-    if (player.score > lastScore) {
-        lastScore = player.score;
-        if (enemySpeed < maxEnemySpeed) {
-            enemySpeed += enemySpeedIncrement; // Increase speed by the increment value
-        }
-        // Gradually decrease the enemy spawn interval
-        if (enemySpawnInterval > 100) { // Minimum spawn interval to avoid excessive spawning
-            enemySpawnInterval = Math.max(50, 2000 - player.score * 20); // Adjust the formula as needed
-            clearInterval(spawnTimer);
-            spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
-        }
+    // Calculate enemy speed based on player score and level
+    enemySpeed = 0.9 + Math.floor(player.score / 100) * 0.6;
+
+    // Adjust spawn interval based on score and level
+    if (enemySpawnInterval > 100) {
+        enemySpawnInterval = Math.max(50, 2000 - player.score * 20);
+        clearInterval(spawnTimer);
+        spawnTimer = setInterval(spawnEnemies, enemySpawnInterval);
     }
 }
 
+// Function to create explosion effect
 function createExplosion(x, y) {
     let explosion = document.createElement('div');
     explosion.setAttribute('class', 'explosion');
@@ -201,25 +241,30 @@ function createExplosion(x, y) {
 
     setTimeout(() => {
         explosion.parentNode.removeChild(explosion);
-    }, 500); // Remove the explosion after the animation is complete
+    }, 500); // Remove the explosion after animation
 }
 
+// Function to handle game over
 function gameOver() {
     cancelAnimationFrame(animateGame);
-    clearInterval(spawnTimer); // Clear the spawn interval
+    clearInterval(spawnTimer);
     gameOverEle.style.display = 'block';
     document.querySelector('.turet').style.display = 'none';
     document.querySelector('.box').style.display = 'none';
     gameOverEle.querySelector('span').innerHTML = 'GAME OVER<br>Your Score: ' + player.score + '<br>';
     updateHighScore(player.score); // Update high score
     gamePlay = false;
-    gamePaused = false; // Reset pause state
-    backgroundMusic.pause(); // Pause the background music
-    backgroundMusic.currentTime = 0; // Reset the music to the beginning
-    backgroundEffect.play(); // Resume the background effect
+    gamePaused = false;
+    backgroundMusic.pause(); // Pause background music
+    backgroundMusic.currentTime = 0;
+    backgroundEffect.play(); // Play background effect
     clearGameArea(); // Clear all enemies and shots
+
+    currentLevel = 1;
+    playerLevelElement.textContent = currentLevel; 
 }
 
+// Function to update high score in UI
 function updateHighScore(score) {
     let highScore = localStorage.getItem('highScore');
     if (!highScore || score > highScore) {
@@ -230,31 +275,38 @@ function updateHighScore(score) {
     }
 }
 
+// Function to update score and progress bar in UI
+// Function to update score and progress bar in UI
 function updateDash() {
     scoreDash.innerHTML = player.score;
     let tempPer = (player.lives / player.barwidth) * 100 + '%';
     progressbar.style.width = tempPer;
 }
 
+// Function to check collision between two elements
 function isCollide(a, b) {
     let aRect = a.getBoundingClientRect();
     let bRect = b.getBoundingClientRect();
     return !(
-        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right)
+        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) ||
+        (aRect.right < bRect.left) || (aRect.left > bRect.right)
     );
 }
 
+// Function to calculate degrees from mouse position
 function getDeg(e) {
     let angle = Math.atan2(e.clientX - boxCenter[0], -(e.clientY - boxCenter[1]));
     return angle * (180 / Math.PI);
 }
 
+// Function to convert degrees to radians
 function degRad(deg) {
     return deg * (Math.PI / 180);
 }
 
+// Function to handle mouse click for shooting
 function mouseDown(e) {
-    if (gamePlay && !gamePaused) { // Check if the game is not paused
+    if (gamePlay && !gamePaused) {
         let div = document.createElement('div');
         let deg = getDeg(e);
         div.setAttribute('class', 'fireme');
@@ -267,7 +319,7 @@ function mouseDown(e) {
         container.appendChild(div);
 
         // Play shooting sound effect
-        shootSound.currentTime = 0; // Reset the sound to the beginning
+        shootSound.currentTime = 0;
         shootSound.play();
 
         info.style.display = 'none';
@@ -275,6 +327,7 @@ function mouseDown(e) {
     }
 }
 
+// Function to set up initial enemies
 function setupBadguys(num) {
     let currentEnemies = document.querySelectorAll('.baddy').length;
     for (let x = 0; x < num - currentEnemies; x++) {
@@ -282,10 +335,12 @@ function setupBadguys(num) {
     }
 }
 
+// Function to generate a random number
 function randomMe(num) {
     return Math.floor(Math.random() * num);
 }
 
+// Function to create a new enemy
 function badmaker() {
     let div = document.createElement('div');
     let myIcon = icons[randomMe(icons.length)];
@@ -328,6 +383,7 @@ function badmaker() {
     container.appendChild(div);
 }
 
+// Function to move all shots
 function moveShots() {
     let tempShots = document.querySelectorAll('.fireme');
     for (let shot of tempShots) {
@@ -340,6 +396,7 @@ function moveShots() {
     }
 }
 
+// Function to spawn enemies continuously
 function spawnEnemies() {
     let currentEnemies = document.querySelectorAll('.baddy').length;
     if (currentEnemies < numEnemies) {
@@ -347,6 +404,7 @@ function spawnEnemies() {
     }
 }
 
+// Function to clear the game area (remove all enemies and shots)
 function clearGameArea() {
     let tempEnemy = document.querySelectorAll('.baddy');
     for (let enemy of tempEnemy) {

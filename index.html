@@ -12,6 +12,7 @@
     <div class="gamePlayArea" id="gamePlayArea">
         <div class="dashBoard" id="dashBoard">
             <div><span class="scoreText">Your Score:</span> <span class="scoreDash">0</span></div>
+            <div id="levelDisplay">Level: <span id="levelValue">1</span></div>
             <div class="progressContainer">
                 <div class="liveText">Life: </div>
                 <div class="progress">
@@ -40,6 +41,9 @@
             </div>
         </div>
 
+        <div class="popup-message alert alert-success" role="alert" style="display: none;">
+            Level Up!
+        </div>
     </div>
 
     <audio id="backgroundMusic" loop>
