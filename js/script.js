@@ -1,11 +1,9 @@
-// Define your icons array and constants
 const icons = [
     "assets/BallOne.png", "assets/BallTwo.png", "assets/pngwing.com.png",
     "assets/Satelite.png", "assets/enemy.png", "assets/EnemyTwo.png",
     "assets/Scary.png"
 ];
 
-// Select necessary DOM elements
 const btnStart = document.querySelector('.btnStart');
 const btnPause = document.querySelector('.btnPause');
 const pauseText = document.getElementById('pauseText');
@@ -19,9 +17,12 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 const shootSound = document.getElementById('shootSound');
 const explosionSound = document.getElementById('explosionSound');
 const collisionSound = document.getElementById('collisionSound');
-const playerLevelElement = document.getElementById('levelValue'); // Updated to use const
+const playerLevelElement = document.getElementById('levelValue'); 
+let nextLevelSound = document.getElementById('nextLevel');
+let nextLevelVoice = document.getElementById('nextLevelVoice');
+nextLevelSound.volume = 0.8;
+nextLevelVoice.volume = 0.8;
 
-// Additional elements from your HTML (assuming they exist)
 let link = document.getElementById('link');
 let info = document.getElementById('info');
 let gamePlayArea = document.getElementById('gamePlayArea');
@@ -131,6 +132,13 @@ function playGame() {
         if (player.score >= currentLevel * 100) {
             currentLevel++; // Increase the current level
             playerLevelElement.textContent = currentLevel; // Update level display
+
+            // Play the next level sound
+            nextLevelSound.currentTime = 0;
+            nextLevelSound.play();
+
+            nextLevelVoice.currentTime = 0;
+            nextLevelVoice.play();
 
              // Display popup message
              let popupMessage = document.querySelector('.popup-message');
