@@ -314,16 +314,15 @@ function degRad(deg) {
 // Function to handle mouse click for shooting
 function mouseDown(e) {
     if (gamePlay && !gamePaused) {
-        let div = document.createElement('div');
         let deg = getDeg(e);
-        div.setAttribute('class', 'fireme');
-        div.moverx = 10 * Math.sin(degRad(deg)); // Increase the speed here
-        div.movery = -10 * Math.cos(degRad(deg)); // Increase the speed here
-        div.style.left = (boxCenter[0] - 5) + 'px';
-        div.style.top = (boxCenter[1] - 5) + 'px';
-        div.style.width = 10 + 'px';
-        div.style.height = 10 + 'px';
-        container.appendChild(div);
+        createProjectile(deg);
+
+        // Check if player score is 800 or more
+        if (player.score >= 800) {
+            // Create two projectiles with slight angle offsets
+            createProjectile(deg + 10); // Adjust the angle as needed
+            createProjectile(deg - 10); // Adjust the angle as needed
+        }
 
         // Play shooting sound effect
         shootSound.currentTime = 0;
@@ -334,6 +333,18 @@ function mouseDown(e) {
     }
 }
 
+// Function to create a projectile at a given angle
+function createProjectile(deg) {
+    let div = document.createElement('div');
+    div.setAttribute('class', 'fireme');
+    div.moverx = 10 * Math.sin(degRad(deg)); // Increase the speed here
+    div.movery = -10 * Math.cos(degRad(deg)); // Increase the speed here
+    div.style.left = (boxCenter[0] - 5) + 'px';
+    div.style.top = (boxCenter[1] - 5) + 'px';
+    div.style.width = 10 + 'px';
+    div.style.height = 10 + 'px';
+    container.appendChild(div);
+}
 // Function to set up initial enemies
 function setupBadguys(num) {
     let currentEnemies = document.querySelectorAll('.baddy').length;
